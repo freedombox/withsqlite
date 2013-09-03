@@ -133,7 +133,7 @@ True
    def __enter__(self):
       if not os.path.exists(self.fname):
          self.make_db()
-      self.conn = sqlite3.connect(self.fname)
+      self.conn = sqlite3.connect(self.fname, check_same_thread = False)
       self.crsr = self.conn.cursor()
       self.crsr.execute('''create table if not exists %s (key text unique, val text)''' % self.table)
       self.conn.commit()
@@ -142,7 +142,7 @@ True
       self.conn.commit()
       self.crsr.close()
    def make_db(self):
-      conn = sqlite3.connect(self.fname)
+      conn = sqlite3.connect(self.fname, check_same_thread = False)
       c = conn.cursor()
       c.execute('''create table if not exists %s (key text unique, val text)''' % self.table)
       conn.commit()
