@@ -155,8 +155,6 @@ True
       self.crsr.execute("delete from %s where key=?" % self.table, [key])
    def jsonize(self,val):
       "If it's just a string, serialize it ourselves"
-      if isinstance(val, basestring):
-         return '"%s"' % val
       return json.dumps(val, default=to_json, sort_keys=True, indent=3)
    def __setitem__(self, key, val):
       """a[k] = v 	set a[k] to v 	"""
