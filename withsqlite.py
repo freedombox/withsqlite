@@ -57,7 +57,7 @@ class sqlite_db():
     each assignment.
     """
 
-    def __init__(self, fname, dir=None, autocommit=False, table="store"):
+    def __init__(self, fname, dir=None, autocommit=False, table="store", check_same_thread = True):
         if dir:
             fname = os.path.join(os.path.abspath(os.path.normpath(dir)), fname)
         self.fname = '{}.sqlite3'.format(fname)
@@ -69,14 +69,14 @@ class sqlite_db():
     def _connect(self):
         if not self.conn:
             if self.autocommit:
-                self.conn = sqlite3.connect(self.fname, isolation_level=None)
+                self.conn = sqlite3.connect(self.fname, isolation_level=None, check_same_thread = self.check_same_thread)
             else:
-                self.conn = sqlite3.connect(self.fname)
+                self.conn = sqlite3.connect(self.fname, check_same_thread = self.check_same_thread)
         if not self.crsr:
             self.crsr = self.conn.cursor()
 
     def make_db(self):
-        conn = sqlite3.connect(self.fname)
+        conn = sqlite3.connect(self.fname, check_same_thread = self.check_same_thread)
         crsr = conn.cursor()
         qry = "create table if not exists {} (key text unique, val text)"
         crsr.execute(qry.format(self.table))
