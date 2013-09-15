@@ -91,9 +91,7 @@ class sqlite_db():
             return isinstance(value, str)
 
     def jsonize(self, val):
-        "If it's just a string, serialize it ourselves"
-        if self.isstring(val):
-            return '"{}"'.format(val)
+        "Use json.dumps to jsonize all values."
         return json.dumps(val, default=to_json, sort_keys=True, indent=3)
 
     def has_key(self, key):
