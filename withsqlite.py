@@ -65,6 +65,7 @@ class sqlite_db():
         self.table = table
         self.conn = None
         self.crsr = None
+        self.check_same_thread = check_same_thread
 
     def _connect(self):
         if not self.conn:
