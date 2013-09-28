@@ -119,3 +119,10 @@ class WithSQLiteTest(unittest.TestCase):
             k, v = items[1]
             self.assertEqual(k, 'b')
             self.assertEqual(v, 'test_b')
+
+    def test_multitable(self):
+        store_file = "test"
+        with sqlite_db(store_file, table="firstboot", autocommit=True) as db:
+            db['state']=1
+        with sqlite_db(store_file, table="thisbox", autocommit=True) as db:
+            db['state']=1
