@@ -69,6 +69,7 @@ class sqlite_db():
 
     def _connect(self):
         if not self.conn:
+            self.make_db()
             if self.autocommit:
                 self.conn = sqlite3.connect(self.fname, isolation_level=None, check_same_thread = self.check_same_thread)
             else:
@@ -127,8 +128,6 @@ class sqlite_db():
 
     def begin(self):
         "Starts the transaction"
-        if not os.path.exists(self.fname):
-            self.make_db()
         self._connect()
 
     def save(self):
