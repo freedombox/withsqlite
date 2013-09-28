@@ -119,3 +119,17 @@ class WithSQLiteTest(unittest.TestCase):
             k, v = items[1]
             self.assertEqual(k, 'b')
             self.assertEqual(v, 'test_b')
+
+    def test_second_table(self):
+        with sqlite_db("test", table="extra") as db:
+            db['c'] = 'test_c'
+            db['d'] = 'test_d'
+            items = db.items()
+            self.assertEqual(len(items), 2)
+            k, v = items[0]
+            self.assertEqual(k, 'c')
+            self.assertEqual(v, 'test_c')
+            k, v = items[1]
+            self.assertEqual(k, 'd')
+            self.assertEqual(v, 'test_d')
+
